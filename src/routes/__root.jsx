@@ -1,20 +1,35 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { createRootRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import Navbar from "../components/Navbar/Navbar";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 export const Route = createRootRoute({
-  component: () => (
-    <>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>{" "}
-        <Link to="/about" className="[&.active]:font-bold">
-          About
-        </Link>
-      </div>
-      <hr />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
+  component: () => {
+    const location = useLocation();
+
+    // Show only Outlet on "/login" and "/register"
+    const showOnlyOutlet =
+      location.pathname === "/login" || location.pathname === "/register";
+
+    return (
+      <>
+        {showOnlyOutlet ? (
+          <Outlet />
+        ) : (
+          <>
+            <div className="container-fluid p-0">
+              <div className="row">
+                <Sidebar />
+                <div className="col-lg-10 ps-0 main-content-container">
+                  <Navbar />
+                  <Outlet />
+                </div>
+              </div>
+            </div>
+            <TanStackRouterDevtools />
+          </>
+        )}
+      </>
+    );
+  },
 });
