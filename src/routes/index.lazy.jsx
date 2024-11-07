@@ -7,6 +7,8 @@ import editIc from "../assets/icon/fi_edit.png";
 import carImg from "../assets/car01.min.jpg";
 import beepImg from "../assets/img-BeepBeep.png"
 import "../styles/list-car.css";
+import { getCars } from "../service/car/car.service.index";
+import { useEffect, useState } from "react";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -14,6 +16,19 @@ export const Route = createLazyFileRoute("/")({
 
 function Index() {
   const navigate = useNavigate();
+
+  const [cars, setCars] = useState([]);
+
+  useEffect(() => {
+    const getCarData = async () => {
+      const result = await getCarData();
+      if(result.success) {
+        setCars(result.data);
+      }
+    };
+
+    getCarData();
+  })
 
   return (
     <div className="container-fluid content-container p-3">
@@ -39,185 +54,47 @@ function Index() {
         </div>
       </div>
       <div className="row">
-        <div className="col-3 mb-2 p-0">
-          <div className="card">
-            <img
-              src={carImg}
-              className="card-img-top card-img img-fluid"
-              alt="..."
-            />
-            <div className="card-body">
-              <h6 className="card-title">Nama/Tipe Mobil</h6>
-              <h5>Rp 430.000/hari</h5>
-              <p className="card-text">
-                <img src={keyIc} alt="" /> Start rent - Finish rent
-              </p>
-              <p>
-                <img src={clockIc} alt="" /> Updated at 27 Oct 2024, 13:00
-              </p>
-              <div className="text-center">
-                <a
-                  href="#"
-                  className="btn btn-primary delete-btn ps-4 pe-4 p-2 me-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteConfirmation"
-                >
-                  <img src={trashIc} alt="" /> Delete
-                </a>
-                <Link
-                  to={"/update-car"}
-                  className="btn btn-primary edit-btn ps-4 pe-4 p-2"
-                >
-                  <img src={editIc} alt="" /> Edit
-                </Link>
+        {cars.length === 0 ? (
+          <h1>Car data is not found!</h1>
+        ) : (
+          cars.map((car) => {
+            <div className="col-3 mb-2 p-0">
+              <div className="card">
+                <img
+                  src={car.image}
+                  className="card-img-top card-img img-fluid"
+                  alt="..."
+                />
+                <div className="card-body">
+                  <h6 className="card-title">{car.type}</h6>
+                  <h5>Rp {car.rentPerDay}/hari</h5>
+                  <p className="card-text">
+                    <img src={keyIc} alt="" /> Start rent - Finish rent
+                  </p>
+                  <p>
+                    <img src={clockIc} alt="" /> Updated at 27 Oct 2024, 13:00
+                  </p>
+                  <div className="text-center">
+                    <a
+                      href="#"
+                      className="btn btn-primary delete-btn ps-4 pe-4 p-2 me-2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteConfirmation"
+                    >
+                      <img src={trashIc} alt="" /> Delete
+                    </a>
+                    <Link
+                      to={"/update-car"}
+                      className="btn btn-primary edit-btn ps-4 pe-4 p-2"
+                    >
+                      <img src={editIc} alt="" /> Edit
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-3 mb-2 p-0">
-          <div className="card">
-            <img
-              src={carImg}
-              className="card-img-top card-img img-fluid"
-              alt="..."
-            />
-            <div className="card-body">
-              <h6 className="card-title">Nama/Tipe Mobil</h6>
-              <h5>Rp 430.000/hari</h5>
-              <p className="card-text">
-                <img src={keyIc} alt="" /> Start rent - Finish rent
-              </p>
-              <p>
-                <img src={clockIc} alt="" /> Updated at 27 Oct 2024, 13:00
-              </p>
-              <div className="text-center">
-                <a
-                  href="#"
-                  className="btn btn-primary delete-btn ps-4 pe-4 p-2 me-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteConfirmation"
-                >
-                  <img src={trashIc} alt="" /> Delete
-                </a>
-                <Link
-                  to={"/update-car"}
-                  className="btn btn-primary edit-btn ps-4 pe-4 p-2"
-                >
-                  <img src={editIc} alt="" /> Edit
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-3 mb-2 p-0">
-          <div className="card">
-            <img
-              src={carImg}
-              className="card-img-top card-img img-fluid"
-              alt="..."
-            />
-            <div className="card-body">
-              <h6 className="card-title">Nama/Tipe Mobil</h6>
-              <h5>Rp 430.000/hari</h5>
-              <p className="card-text">
-                <img src={keyIc} alt="" /> Start rent - Finish rent
-              </p>
-              <p>
-                <img src={clockIc} alt="" /> Updated at 27 Oct 2024, 13:00
-              </p>
-              <div className="text-center">
-                <a
-                  href="#"
-                  className="btn btn-primary delete-btn ps-4 pe-4 p-2 me-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteConfirmation"
-                >
-                  <img src={trashIc} alt="" /> Delete
-                </a>
-                <Link
-                  to={"/update-car"}
-                  className="btn btn-primary edit-btn ps-4 pe-4 p-2"
-                >
-                  <img src={editIc} alt="" /> Edit
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-3 mb-2 p-0">
-          <div className="card">
-            <img
-              src={carImg}
-              className="card-img-top card-img img-fluid"
-              alt="..."
-            />
-            <div className="card-body">
-              <h6 className="card-title">Nama/Tipe Mobil</h6>
-              <h5>Rp 430.000/hari</h5>
-              <p className="card-text">
-                <img src={keyIc} alt="" /> Start rent - Finish rent
-              </p>
-              <p>
-                <img src={clockIc} alt="" /> Updated at 27 Oct 2024, 13:00
-              </p>
-              <div className="text-center">
-                <a
-                  href="#"
-                  className="btn btn-primary delete-btn ps-4 pe-4 p-2 me-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteConfirmation"
-                >
-                  <img src={trashIc} alt="" /> Delete
-                </a>
-                <Link
-                  to={"/update-car"}
-                  className="btn btn-primary edit-btn ps-4 pe-4 p-2"
-                >
-                  <img src={editIc} alt="" /> Edit
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-3 mb-2 p-0">
-          <div className="card">
-            <img
-              src={carImg}
-              className="card-img-top card-img img-fluid"
-              alt="..."
-            />
-            <div className="card-body">
-              <h6 className="card-title">Nama/Tipe Mobil</h6>
-              <h5>Rp 430.000/hari</h5>
-              <p className="card-text">
-                <img src={keyIc} alt="" /> Start rent - Finish rent
-              </p>
-              <p>
-                <img src={clockIc} alt="" /> Updated at 27 Oct 2024, 13:00
-              </p>
-              <div className="text-center">
-                <a
-                  href="#"
-                  className="btn btn-primary delete-btn ps-4 pe-4 p-2 me-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteConfirmation"
-                >
-                  <img src={trashIc} alt="" /> Delete
-                </a>
-                <Link
-                  to={"/update-car"}
-                  className="btn btn-primary edit-btn ps-4 pe-4 p-2"
-                >
-                  <img src={editIc} alt="" /> Edit
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+            </div>;
+          })
+        )}
       </div>
 
       {/* Modal For Delete Confirmation */}
