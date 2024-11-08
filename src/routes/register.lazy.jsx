@@ -74,11 +74,11 @@ function Register() {
                 <img src={logo} alt="Logo" />
               </div>
             </div>
-            <div className="row mt-4">
+            <div className="row mt-3">
               <h3>Welcome, Sign Up to BCR</h3>
               {/* Form */}
-              <form className="mt-3" onSubmit={onSubmit}>
-                <div className="mb-3">
+              <form className="mt-2" onSubmit={onSubmit}>
+                <div className="mb-2">
                   <label htmlFor="inputName" className="form-label">
                     Name
                   </label>
@@ -94,7 +94,7 @@ function Register() {
                     }}
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-2">
                   <label htmlFor="inputEmail" className="form-label">
                     Email address
                   </label>
@@ -110,7 +110,7 @@ function Register() {
                     }}
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-2">
                   <label htmlFor="inputPassword" className="form-label">
                     Password
                   </label>
@@ -125,7 +125,7 @@ function Register() {
                     }}
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-2">
                   <label htmlFor="inputConfirmPassword" className="form-label">
                     Confirm Password
                   </label>
@@ -140,7 +140,7 @@ function Register() {
                     }}
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-2">
                   <label htmlFor="inputProfilePicture" className="form-label">
                     Profile Picture
                   </label>
