@@ -21,6 +21,7 @@ const RegisterLazyImport = createFileRoute('/register')()
 const LoginLazyImport = createFileRoute('/login')()
 const AddCarLazyImport = createFileRoute('/add-car')()
 const IndexLazyImport = createFileRoute('/')()
+const ManufacturesIndexLazyImport = createFileRoute('/manufactures/')()
 
 // Create/Update Routes
 
@@ -53,6 +54,14 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const ManufacturesIndexLazyRoute = ManufacturesIndexLazyImport.update({
+  id: '/manufactures/',
+  path: '/manufactures/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/manufactures/index.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -93,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpdateCarLazyImport
       parentRoute: typeof rootRoute
     }
+    '/manufactures/': {
+      id: '/manufactures/'
+      path: '/manufactures'
+      fullPath: '/manufactures'
+      preLoaderRoute: typeof ManufacturesIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -104,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginLazyRoute
   '/register': typeof RegisterLazyRoute
   '/update-car': typeof UpdateCarLazyRoute
+  '/manufactures': typeof ManufacturesIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -112,6 +129,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginLazyRoute
   '/register': typeof RegisterLazyRoute
   '/update-car': typeof UpdateCarLazyRoute
+  '/manufactures': typeof ManufacturesIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -121,14 +139,34 @@ export interface FileRoutesById {
   '/login': typeof LoginLazyRoute
   '/register': typeof RegisterLazyRoute
   '/update-car': typeof UpdateCarLazyRoute
+  '/manufactures/': typeof ManufacturesIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/add-car' | '/login' | '/register' | '/update-car'
+  fullPaths:
+    | '/'
+    | '/add-car'
+    | '/login'
+    | '/register'
+    | '/update-car'
+    | '/manufactures'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/add-car' | '/login' | '/register' | '/update-car'
-  id: '__root__' | '/' | '/add-car' | '/login' | '/register' | '/update-car'
+  to:
+    | '/'
+    | '/add-car'
+    | '/login'
+    | '/register'
+    | '/update-car'
+    | '/manufactures'
+  id:
+    | '__root__'
+    | '/'
+    | '/add-car'
+    | '/login'
+    | '/register'
+    | '/update-car'
+    | '/manufactures/'
   fileRoutesById: FileRoutesById
 }
 
@@ -138,6 +176,7 @@ export interface RootRouteChildren {
   LoginLazyRoute: typeof LoginLazyRoute
   RegisterLazyRoute: typeof RegisterLazyRoute
   UpdateCarLazyRoute: typeof UpdateCarLazyRoute
+  ManufacturesIndexLazyRoute: typeof ManufacturesIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -146,6 +185,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginLazyRoute: LoginLazyRoute,
   RegisterLazyRoute: RegisterLazyRoute,
   UpdateCarLazyRoute: UpdateCarLazyRoute,
+  ManufacturesIndexLazyRoute: ManufacturesIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -162,7 +202,8 @@ export const routeTree = rootRoute
         "/add-car",
         "/login",
         "/register",
-        "/update-car"
+        "/update-car",
+        "/manufactures/"
       ]
     },
     "/": {
@@ -179,6 +220,9 @@ export const routeTree = rootRoute
     },
     "/update-car": {
       "filePath": "update-car.lazy.jsx"
+    },
+    "/manufactures/": {
+      "filePath": "manufactures/index.lazy.jsx"
     }
   }
 }
