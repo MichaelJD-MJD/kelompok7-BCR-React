@@ -8,7 +8,7 @@ export const getCars = async () => {
     // get data
     const result = await response.json();
     return result;
-}
+};
 
 export const getDetailCar = async (id) => {
     let url = `${import.meta.env.VITE_API_URL}/cars/${id}`;
@@ -20,7 +20,7 @@ export const getDetailCar = async (id) => {
     // get data
     const result = await response.json();
     return result;
-}
+};
 
 export const createCar = async (request) => {
     const formData = new FormData();
@@ -67,23 +67,21 @@ export const updateStudent = async (id, request) => {
     formData.append("image", request.image);
 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/cars/${id}`, {
-      method: "PUT",
-      body: formData,
+        method: "PUT",
+        body: formData,
     });
 
     // get data
     const result = await response.json();
     return result;
-}
+};
 
 export const deleteCar = async (id) => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/cars/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/cars/${id}`, {
         method: "DELETE",
-      }
-    );
+    });
 
     // get data
     const result = await response.json();
     return result;
-}
+};

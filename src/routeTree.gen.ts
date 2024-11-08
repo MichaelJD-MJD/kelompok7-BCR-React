@@ -66,14 +66,14 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-<<<<<<< HEAD
 const ManufacturesIndexLazyRoute = ManufacturesIndexLazyImport.update({
   id: '/manufactures/',
   path: '/manufactures/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/manufactures/index.lazy').then((d) => d.Route),
-=======
+)
+
 const TypesRoutesCreateLazyRoute = TypesRoutesCreateLazyImport.update({
   id: '/types-routes/create',
   path: '/types-routes/create',
@@ -102,7 +102,6 @@ const TypesRoutesEditIdLazyRoute = TypesRoutesEditIdLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/types-routes/edit/$id.lazy').then((d) => d.Route),
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
 )
 
 // Populate the FileRoutesByPath interface
@@ -151,13 +150,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpdateCarLazyImport
       parentRoute: typeof rootRoute
     }
-<<<<<<< HEAD
-    '/manufactures/': {
-      id: '/manufactures/'
-      path: '/manufactures'
-      fullPath: '/manufactures'
-      preLoaderRoute: typeof ManufacturesIndexLazyImport
-=======
     '/types-routes/TypesItem': {
       id: '/types-routes/TypesItem'
       path: '/types-routes/TypesItem'
@@ -179,12 +171,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TypesRoutesCreateLazyImport
       parentRoute: typeof rootRoute
     }
+    '/manufactures/': {
+      id: '/manufactures/'
+      path: '/manufactures'
+      fullPath: '/manufactures'
+      preLoaderRoute: typeof ManufacturesIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/types-routes/edit/$id': {
       id: '/types-routes/edit/$id'
       path: '/types-routes/edit/$id'
       fullPath: '/types-routes/edit/$id'
       preLoaderRoute: typeof TypesRoutesEditIdLazyImport
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
       parentRoute: typeof rootRoute
     }
   }
@@ -199,14 +197,11 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterLazyRoute
   '/types': typeof TypesLazyRoute
   '/update-car': typeof UpdateCarLazyRoute
-<<<<<<< HEAD
-  '/manufactures': typeof ManufacturesIndexLazyRoute
-=======
   '/types-routes/TypesItem': typeof TypesRoutesTypesItemRoute
   '/types-routes/$id': typeof TypesRoutesIdLazyRoute
   '/types-routes/create': typeof TypesRoutesCreateLazyRoute
+  '/manufactures': typeof ManufacturesIndexLazyRoute
   '/types-routes/edit/$id': typeof TypesRoutesEditIdLazyRoute
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
 }
 
 export interface FileRoutesByTo {
@@ -216,14 +211,11 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterLazyRoute
   '/types': typeof TypesLazyRoute
   '/update-car': typeof UpdateCarLazyRoute
-<<<<<<< HEAD
-  '/manufactures': typeof ManufacturesIndexLazyRoute
-=======
   '/types-routes/TypesItem': typeof TypesRoutesTypesItemRoute
   '/types-routes/$id': typeof TypesRoutesIdLazyRoute
   '/types-routes/create': typeof TypesRoutesCreateLazyRoute
+  '/manufactures': typeof ManufacturesIndexLazyRoute
   '/types-routes/edit/$id': typeof TypesRoutesEditIdLazyRoute
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
 }
 
 export interface FileRoutesById {
@@ -234,14 +226,11 @@ export interface FileRoutesById {
   '/register': typeof RegisterLazyRoute
   '/types': typeof TypesLazyRoute
   '/update-car': typeof UpdateCarLazyRoute
-<<<<<<< HEAD
-  '/manufactures/': typeof ManufacturesIndexLazyRoute
-=======
   '/types-routes/TypesItem': typeof TypesRoutesTypesItemRoute
   '/types-routes/$id': typeof TypesRoutesIdLazyRoute
   '/types-routes/create': typeof TypesRoutesCreateLazyRoute
+  '/manufactures/': typeof ManufacturesIndexLazyRoute
   '/types-routes/edit/$id': typeof TypesRoutesEditIdLazyRoute
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
 }
 
 export interface FileRouteTypes {
@@ -251,51 +240,39 @@ export interface FileRouteTypes {
     | '/add-car'
     | '/login'
     | '/register'
-<<<<<<< HEAD
-    | '/update-car'
-    | '/manufactures'
-=======
     | '/types'
     | '/update-car'
     | '/types-routes/TypesItem'
     | '/types-routes/$id'
     | '/types-routes/create'
+    | '/manufactures'
     | '/types-routes/edit/$id'
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/add-car'
     | '/login'
     | '/register'
-<<<<<<< HEAD
-    | '/update-car'
-    | '/manufactures'
-=======
     | '/types'
     | '/update-car'
     | '/types-routes/TypesItem'
     | '/types-routes/$id'
     | '/types-routes/create'
+    | '/manufactures'
     | '/types-routes/edit/$id'
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
   id:
     | '__root__'
     | '/'
     | '/add-car'
     | '/login'
     | '/register'
-<<<<<<< HEAD
-    | '/update-car'
-    | '/manufactures/'
-=======
     | '/types'
     | '/update-car'
     | '/types-routes/TypesItem'
     | '/types-routes/$id'
     | '/types-routes/create'
+    | '/manufactures/'
     | '/types-routes/edit/$id'
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
   fileRoutesById: FileRoutesById
 }
 
@@ -306,14 +283,11 @@ export interface RootRouteChildren {
   RegisterLazyRoute: typeof RegisterLazyRoute
   TypesLazyRoute: typeof TypesLazyRoute
   UpdateCarLazyRoute: typeof UpdateCarLazyRoute
-<<<<<<< HEAD
-  ManufacturesIndexLazyRoute: typeof ManufacturesIndexLazyRoute
-=======
   TypesRoutesTypesItemRoute: typeof TypesRoutesTypesItemRoute
   TypesRoutesIdLazyRoute: typeof TypesRoutesIdLazyRoute
   TypesRoutesCreateLazyRoute: typeof TypesRoutesCreateLazyRoute
+  ManufacturesIndexLazyRoute: typeof ManufacturesIndexLazyRoute
   TypesRoutesEditIdLazyRoute: typeof TypesRoutesEditIdLazyRoute
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -323,14 +297,11 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterLazyRoute: RegisterLazyRoute,
   TypesLazyRoute: TypesLazyRoute,
   UpdateCarLazyRoute: UpdateCarLazyRoute,
-<<<<<<< HEAD
-  ManufacturesIndexLazyRoute: ManufacturesIndexLazyRoute,
-=======
   TypesRoutesTypesItemRoute: TypesRoutesTypesItemRoute,
   TypesRoutesIdLazyRoute: TypesRoutesIdLazyRoute,
   TypesRoutesCreateLazyRoute: TypesRoutesCreateLazyRoute,
+  ManufacturesIndexLazyRoute: ManufacturesIndexLazyRoute,
   TypesRoutesEditIdLazyRoute: TypesRoutesEditIdLazyRoute,
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
 }
 
 export const routeTree = rootRoute
@@ -347,17 +318,13 @@ export const routeTree = rootRoute
         "/add-car",
         "/login",
         "/register",
-<<<<<<< HEAD
-        "/update-car",
-        "/manufactures/"
-=======
         "/types",
         "/update-car",
         "/types-routes/TypesItem",
         "/types-routes/$id",
         "/types-routes/create",
+        "/manufactures/",
         "/types-routes/edit/$id"
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
       ]
     },
     "/": {
@@ -378,10 +345,6 @@ export const routeTree = rootRoute
     "/update-car": {
       "filePath": "update-car.lazy.jsx"
     },
-<<<<<<< HEAD
-    "/manufactures/": {
-      "filePath": "manufactures/index.lazy.jsx"
-=======
     "/types-routes/TypesItem": {
       "filePath": "types-routes/TypesItem.jsx"
     },
@@ -391,9 +354,11 @@ export const routeTree = rootRoute
     "/types-routes/create": {
       "filePath": "types-routes/create.lazy.jsx"
     },
+    "/manufactures/": {
+      "filePath": "manufactures/index.lazy.jsx"
+    },
     "/types-routes/edit/$id": {
       "filePath": "types-routes/edit/$id.lazy.jsx"
->>>>>>> 59d873b46cc0a3b50032b71bdf8f46e5b5cb647d
     }
   }
 }

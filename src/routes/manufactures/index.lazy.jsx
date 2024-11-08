@@ -13,7 +13,7 @@ import plusIc from "../../assets/icon/fi_plus.png";
 import beepImg from "../../assets/img-BeepBeep.png";
 import "../../styles/manufactures/manufacture.css";
 import ManufactureItem from "../../components/Manufacture/ManufactureItem";
-import { getManufacture } from "../../services/manufacture";
+import { getManufacture } from "../../service/manufacture";
 
 export const Route = createLazyFileRoute("/manufactures/")({
     component: Index,
