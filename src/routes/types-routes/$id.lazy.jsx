@@ -92,32 +92,27 @@ function TypeDetail() {
     <Row className="mt-5">
       <Col className="offset-md-3">
         <Card>
+          <Card.Header
+            className="text-left"
+            style={{ fontWeight: "700", fontSize: "32px" }}
+          >
+            Detail Types
+          </Card.Header>
           <Card.Body>
-            <Card.Title>{type?.type}</Card.Title>
-            <Card.Text>{type?.description}</Card.Text>
-            {user && user?.role_id === 1 && (
-              <Card.Text>
-                <div className="d-grid gap-2">
-                  <Button
-                    as={Link}
-                    href={`/types-routes/edit/${id}`}
-                    variant="primary"
-                    size="md"
-                  >
-                    Edit Type
-                  </Button>
-                </div>
-              </Card.Text>
-            )}
-            {user && user?.role_id === 1 && (
-              <Card.Text>
-                <div className="d-grid gap-2">
-                  <Button onClick={onDelete} variant="danger" size="md">
-                    Delete Type
-                  </Button>
-                </div>
-              </Card.Text>
-            )}
+            <Card.Title style={{ fontWeight: "500", fontSize: "22px" }}>
+              Type : {type?.type}
+            </Card.Title>
+            <Card.Text>Description : {type?.description}</Card.Text>
+
+            <Button
+              variant="outline-dark"
+              className="d-flex align-items-center"
+              style={{ fontWeight: 700, width: "65px" }}
+              as={Link}
+              to="/types"
+            >
+              Back
+            </Button>
           </Card.Body>
         </Card>
       </Col>

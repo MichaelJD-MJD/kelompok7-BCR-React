@@ -30,8 +30,22 @@ const Sidebar = () => {
           </div>
           <div className="col-8 pt-1 p-3 sidebar-container-content d-flex flex-column align-items-left justify-content-top">
             <img src={kotak2} alt="" />
-            <p className="mt-3">Cars</p>
-            <p className="mt-3">Manufactures</p>
+            <p className="mt-3">
+              <Link
+                to="/"
+                style={{ fontWeight: 700, textDecoration: "none" }}
+              >
+                Cars
+              </Link>
+            </p>
+            <p className="mt-3">
+              <Link
+                to="/manufactures"
+                style={{ fontWeight: 700, textDecoration: "none" }}
+              >
+                Manufactures
+              </Link>
+            </p>
             <p className="mt-3">
               <Link
                 to="/types"

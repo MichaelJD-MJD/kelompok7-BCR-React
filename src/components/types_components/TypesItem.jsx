@@ -1,100 +1,52 @@
-import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { deleteType, getDetailType } from "../../service/types-service";
 import { toast } from "react-toastify";
-import { confirmAlert } from "react-confirm-alert";
 
 const TypeItem = ({ type }) => {
   const navigate = useNavigate();
-
-  const { user, token } = useSelector((state) => state.auth);
-  const [typeData, setTypeData] = useState(null); // Renamed state variable to typeData
+  const { user } = useSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(false);
   const [isNotFound, setIsNotFound] = useState(false);
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
+  const [typeToDelete, setTypeToDelete] = useState(null); // State to hold type data to delete
 
-  useEffect(() => {
-    const getDetailTypeData = async (id) => {
-      setIsLoading(true);
-      const result = await getDetailType(id);
-      if (result?.success) {
-        setTypeData(result.data); // Set state with typeData
-        setIsNotFound(false);
-      } else {
-        setIsNotFound(true);
-      }
-      setIsLoading(false);
-    };
-
-    if (type?.id) {
-      // Check type prop
-      getDetailTypeData(type?.id); // Fetch type data based on the prop id
+  const getDetailTypeData = async (id) => {
+    setIsLoading(true);
+    const result = await getDetailType(id);
+    if (result?.success) {
+      setIsNotFound(false);
+    } else {
+      setIsNotFound(true);
     }
-  }, [type?.id]);
+    setIsLoading(false);
+  };
 
-  if (isLoading) {
-    return (
-      <Row className="mt-5">
-        <Col>
-          <h1 className="text-center">Loading...</h1>
-        </Col>
-      </Row>
-    );
-  }
-
-  if (isNotFound) {
-    return (
-      <Row className="mt-5">
-        <Col>
-          <h1 className="text-center">Type is not found!</h1>
-        </Col>
-      </Row>
-    );
-  }
-
-  const onDelete = async (event) => {
-    event.preventDefault();
-
-    confirmAlert({
-      title: "Confirm to delete",
-      message: "Are you sure to delete this data?",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: async () => {
-            const result = await deleteType(type?.id); // Use type prop for deletion
-            if (result?.success) {
-              navigate({ to: "/types" });
-              return;
-            }
-
-            toast.error(result?.message);
-          },
-        },
-        {
-          label: "No",
-          onClick: () => {},
-        },
-      ],
-    });
+  const onDelete = async () => {
+    if (typeToDelete) {
+      const result = await deleteType(typeToDelete.id); // Use the selected type's ID to delete
+      if (result?.success) {
+        toast.success("Type deleted successfully");
+        navigate({ to: "/types" });
+      } else {
+        toast.error(result?.message || "Failed to delete");
+      }
+      setShowModal(false); // Hide the modal after action
+    }
   };
 
   return (
     <Col md={3}>
       <Card style={{ width: "18rem" }}>
         <Card.Body>
-          <Card.Title>{type?.type}</Card.Title>
+          <Card.Title style={{ fontWeight: 700 }}>{type?.type}</Card.Title>
           <Card.Text>{type?.description}</Card.Text>
-          <Button
-            as={Link}
-            href={`/types-routes/${type?.id}`}
-            variant="primary"
-          >
+          <Button variant="primary" href={`/types-routes/${type?.id}`}>
             Detail Types
           </Button>
           {user && user?.role_id === 1 && (
@@ -103,7 +55,10 @@ const TypeItem = ({ type }) => {
                 variant="outline-danger"
                 className="d-flex align-items-center"
                 style={{ fontWeight: 700, padding: "0.5rem 1.6rem" }}
-                onClick={onDelete}
+                onClick={() => {
+                  setTypeToDelete(type); // Set the type to be deleted
+                  setShowModal(true); // Show the modal
+                }}
               >
                 <img
                   src="/assets/image/fi_trash-2.png"
@@ -131,14 +86,59 @@ const TypeItem = ({ type }) => {
           )}
         </Card.Body>
       </Card>
+
+      {/* Delete Confirmation Modal */}
+      {showModal && (
+        <div
+          className="modal fade show"
+          id="deleteConfirmation"
+          tabIndex="-1"
+          aria-labelledby="deleteConfirmationLabel"
+          aria-hidden="false"
+          style={{ display: "block" }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="text-center">
+                  <img
+                    src="../../../public/assets/image/img-BeepBeep.png"
+                    alt=""
+                    className="w-50"
+                  />
+                  <h5>Menghapus Data Mobil</h5>
+                  <p>
+                    Setelah dihapus, data mobil tidak dapat dikembalikan. Yakin
+                    ingin menghapus?
+                  </p>
+                </div>
+              </div>
+              <div className="modal-footer d-flex align-items-center justify-content-center">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowModal(false)}
+                >
+                  Tidak
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={onDelete}
+                >
+                  Ya
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </Col>
   );
 };
 
 TypeItem.propTypes = {
-  type: PropTypes.object,
-  types: PropTypes.array.isRequired, // Daftar semua tipe
-  setTypes: PropTypes.func.isRequired, // Fungsi untuk memperbarui daftar tipe
+  type: PropTypes.object.isRequired,
 };
 
 export default TypeItem;

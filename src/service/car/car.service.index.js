@@ -1,8 +1,13 @@
 export const getCars = async () => {
+    const token = localStorage.getItem("token");
+
     let url = `${import.meta.env.VITE_API_URL}/cars`;
 
     const response = await fetch(url, {
-        method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      method: "GET",
     });
 
     // get data
@@ -11,10 +16,14 @@ export const getCars = async () => {
 };
 
 export const getDetailCar = async (id) => {
+    const token = localStorage.getItem("token");
     let url = `${import.meta.env.VITE_API_URL}/cars/${id}`;
 
     const response = await fetch(url, {
-        method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      method: "GET",
     });
 
     // get data
@@ -23,6 +32,8 @@ export const getDetailCar = async (id) => {
 };
 
 export const createCar = async (request) => {
+    const token = localStorage.getItem("token");
+
     const formData = new FormData();
     formData.append("plate", request.plate);
     formData.append("manufacture_id", request.manufacture_id);
@@ -40,8 +51,11 @@ export const createCar = async (request) => {
     formData.append("image", request.image);
 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/cars`, {
-        method: "POST",
-        body: formData,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      method: "POST",
+      body: formData,
     });
 
     // get data
@@ -50,6 +64,8 @@ export const createCar = async (request) => {
 };
 
 export const updateStudent = async (id, request) => {
+    const token = localStorage.getItem("token");
+
     const formData = new FormData();
     formData.append("plate", request.plate);
     formData.append("manufacture_id", request.manufacture_id);
@@ -67,8 +83,11 @@ export const updateStudent = async (id, request) => {
     formData.append("image", request.image);
 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/cars/${id}`, {
-        method: "PUT",
-        body: formData,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      method: "PUT",
+      body: formData,
     });
 
     // get data
@@ -77,8 +96,13 @@ export const updateStudent = async (id, request) => {
 };
 
 export const deleteCar = async (id) => {
+     const token = localStorage.getItem("token");
+
     const response = await fetch(`${import.meta.env.VITE_API_URL}/cars/${id}`, {
-        method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      method: "DELETE",
     });
 
     // get data

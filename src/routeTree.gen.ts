@@ -13,28 +13,21 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as TypesRoutesTypesItemImport } from './routes/types-routes/TypesItem'
 
 // Create Virtual Routes
 
-const UpdateCarLazyImport = createFileRoute('/update-car')()
 const TypesLazyImport = createFileRoute('/types')()
 const RegisterLazyImport = createFileRoute('/register')()
 const LoginLazyImport = createFileRoute('/login')()
-const AddCarLazyImport = createFileRoute('/add-car')()
 const IndexLazyImport = createFileRoute('/')()
 const ManufacturesIndexLazyImport = createFileRoute('/manufactures/')()
 const TypesRoutesCreateLazyImport = createFileRoute('/types-routes/create')()
 const TypesRoutesIdLazyImport = createFileRoute('/types-routes/$id')()
+const CarsCreateLazyImport = createFileRoute('/cars/create')()
 const TypesRoutesEditIdLazyImport = createFileRoute('/types-routes/edit/$id')()
+const CarsEditIdLazyImport = createFileRoute('/cars/edit/$id')()
 
 // Create/Update Routes
-
-const UpdateCarLazyRoute = UpdateCarLazyImport.update({
-  id: '/update-car',
-  path: '/update-car',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/update-car.lazy').then((d) => d.Route))
 
 const TypesLazyRoute = TypesLazyImport.update({
   id: '/types',
@@ -53,12 +46,6 @@ const LoginLazyRoute = LoginLazyImport.update({
   path: '/login',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/login.lazy').then((d) => d.Route))
-
-const AddCarLazyRoute = AddCarLazyImport.update({
-  id: '/add-car',
-  path: '/add-car',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/add-car.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   id: '/',
@@ -90,11 +77,11 @@ const TypesRoutesIdLazyRoute = TypesRoutesIdLazyImport.update({
   import('./routes/types-routes/$id.lazy').then((d) => d.Route),
 )
 
-const TypesRoutesTypesItemRoute = TypesRoutesTypesItemImport.update({
-  id: '/types-routes/TypesItem',
-  path: '/types-routes/TypesItem',
+const CarsCreateLazyRoute = CarsCreateLazyImport.update({
+  id: '/cars/create',
+  path: '/cars/create',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/cars/create.lazy').then((d) => d.Route))
 
 const TypesRoutesEditIdLazyRoute = TypesRoutesEditIdLazyImport.update({
   id: '/types-routes/edit/$id',
@@ -103,6 +90,12 @@ const TypesRoutesEditIdLazyRoute = TypesRoutesEditIdLazyImport.update({
 } as any).lazy(() =>
   import('./routes/types-routes/edit/$id.lazy').then((d) => d.Route),
 )
+
+const CarsEditIdLazyRoute = CarsEditIdLazyImport.update({
+  id: '/cars/edit/$id',
+  path: '/cars/edit/$id',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/cars/edit/$id.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -113,13 +106,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/add-car': {
-      id: '/add-car'
-      path: '/add-car'
-      fullPath: '/add-car'
-      preLoaderRoute: typeof AddCarLazyImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -143,18 +129,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TypesLazyImport
       parentRoute: typeof rootRoute
     }
-    '/update-car': {
-      id: '/update-car'
-      path: '/update-car'
-      fullPath: '/update-car'
-      preLoaderRoute: typeof UpdateCarLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/types-routes/TypesItem': {
-      id: '/types-routes/TypesItem'
-      path: '/types-routes/TypesItem'
-      fullPath: '/types-routes/TypesItem'
-      preLoaderRoute: typeof TypesRoutesTypesItemImport
+    '/cars/create': {
+      id: '/cars/create'
+      path: '/cars/create'
+      fullPath: '/cars/create'
+      preLoaderRoute: typeof CarsCreateLazyImport
       parentRoute: typeof rootRoute
     }
     '/types-routes/$id': {
@@ -176,6 +155,12 @@ declare module '@tanstack/react-router' {
       path: '/manufactures'
       fullPath: '/manufactures'
       preLoaderRoute: typeof ManufacturesIndexLazyImport
+    }
+    '/cars/edit/$id': {
+      id: '/cars/edit/$id'
+      path: '/cars/edit/$id'
+      fullPath: '/cars/edit/$id'
+      preLoaderRoute: typeof CarsEditIdLazyImport
       parentRoute: typeof rootRoute
     }
     '/types-routes/edit/$id': {
@@ -192,44 +177,41 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '/add-car': typeof AddCarLazyRoute
   '/login': typeof LoginLazyRoute
   '/register': typeof RegisterLazyRoute
   '/types': typeof TypesLazyRoute
-  '/update-car': typeof UpdateCarLazyRoute
-  '/types-routes/TypesItem': typeof TypesRoutesTypesItemRoute
+  '/cars/create': typeof CarsCreateLazyRoute
   '/types-routes/$id': typeof TypesRoutesIdLazyRoute
   '/types-routes/create': typeof TypesRoutesCreateLazyRoute
   '/manufactures': typeof ManufacturesIndexLazyRoute
+  '/cars/edit/$id': typeof CarsEditIdLazyRoute
   '/types-routes/edit/$id': typeof TypesRoutesEditIdLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '/add-car': typeof AddCarLazyRoute
   '/login': typeof LoginLazyRoute
   '/register': typeof RegisterLazyRoute
   '/types': typeof TypesLazyRoute
-  '/update-car': typeof UpdateCarLazyRoute
-  '/types-routes/TypesItem': typeof TypesRoutesTypesItemRoute
+  '/cars/create': typeof CarsCreateLazyRoute
   '/types-routes/$id': typeof TypesRoutesIdLazyRoute
   '/types-routes/create': typeof TypesRoutesCreateLazyRoute
   '/manufactures': typeof ManufacturesIndexLazyRoute
+  '/cars/edit/$id': typeof CarsEditIdLazyRoute
   '/types-routes/edit/$id': typeof TypesRoutesEditIdLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
-  '/add-car': typeof AddCarLazyRoute
   '/login': typeof LoginLazyRoute
   '/register': typeof RegisterLazyRoute
   '/types': typeof TypesLazyRoute
-  '/update-car': typeof UpdateCarLazyRoute
-  '/types-routes/TypesItem': typeof TypesRoutesTypesItemRoute
+  '/cars/create': typeof CarsCreateLazyRoute
   '/types-routes/$id': typeof TypesRoutesIdLazyRoute
   '/types-routes/create': typeof TypesRoutesCreateLazyRoute
   '/manufactures/': typeof ManufacturesIndexLazyRoute
+  '/cars/edit/$id': typeof CarsEditIdLazyRoute
   '/types-routes/edit/$id': typeof TypesRoutesEditIdLazyRoute
 }
 
@@ -237,70 +219,65 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/add-car'
     | '/login'
     | '/register'
     | '/types'
-    | '/update-car'
-    | '/types-routes/TypesItem'
+    | '/cars/create'
     | '/types-routes/$id'
     | '/types-routes/create'
     | '/manufactures'
+    | '/cars/edit/$id'
     | '/types-routes/edit/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/add-car'
     | '/login'
     | '/register'
     | '/types'
-    | '/update-car'
-    | '/types-routes/TypesItem'
+    | '/cars/create'
     | '/types-routes/$id'
     | '/types-routes/create'
     | '/manufactures'
+    | '/cars/edit/$id'
     | '/types-routes/edit/$id'
   id:
     | '__root__'
     | '/'
-    | '/add-car'
     | '/login'
     | '/register'
     | '/types'
-    | '/update-car'
-    | '/types-routes/TypesItem'
+    | '/cars/create'
     | '/types-routes/$id'
     | '/types-routes/create'
     | '/manufactures/'
+    | '/cars/edit/$id'
     | '/types-routes/edit/$id'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
-  AddCarLazyRoute: typeof AddCarLazyRoute
   LoginLazyRoute: typeof LoginLazyRoute
   RegisterLazyRoute: typeof RegisterLazyRoute
   TypesLazyRoute: typeof TypesLazyRoute
-  UpdateCarLazyRoute: typeof UpdateCarLazyRoute
-  TypesRoutesTypesItemRoute: typeof TypesRoutesTypesItemRoute
+  CarsCreateLazyRoute: typeof CarsCreateLazyRoute
   TypesRoutesIdLazyRoute: typeof TypesRoutesIdLazyRoute
   TypesRoutesCreateLazyRoute: typeof TypesRoutesCreateLazyRoute
   ManufacturesIndexLazyRoute: typeof ManufacturesIndexLazyRoute
+  CarsEditIdLazyRoute: typeof CarsEditIdLazyRoute
   TypesRoutesEditIdLazyRoute: typeof TypesRoutesEditIdLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  AddCarLazyRoute: AddCarLazyRoute,
   LoginLazyRoute: LoginLazyRoute,
   RegisterLazyRoute: RegisterLazyRoute,
   TypesLazyRoute: TypesLazyRoute,
-  UpdateCarLazyRoute: UpdateCarLazyRoute,
-  TypesRoutesTypesItemRoute: TypesRoutesTypesItemRoute,
+  CarsCreateLazyRoute: CarsCreateLazyRoute,
   TypesRoutesIdLazyRoute: TypesRoutesIdLazyRoute,
   TypesRoutesCreateLazyRoute: TypesRoutesCreateLazyRoute,
   ManufacturesIndexLazyRoute: ManufacturesIndexLazyRoute,
+  CarsEditIdLazyRoute: CarsEditIdLazyRoute,
   TypesRoutesEditIdLazyRoute: TypesRoutesEditIdLazyRoute,
 }
 
@@ -315,23 +292,19 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
-        "/add-car",
         "/login",
         "/register",
         "/types",
-        "/update-car",
-        "/types-routes/TypesItem",
+        "/cars/create",
         "/types-routes/$id",
         "/types-routes/create",
         "/manufactures/",
+        "/cars/edit/$id",
         "/types-routes/edit/$id"
       ]
     },
     "/": {
       "filePath": "index.lazy.jsx"
-    },
-    "/add-car": {
-      "filePath": "add-car.lazy.jsx"
     },
     "/login": {
       "filePath": "login.lazy.jsx"
@@ -342,11 +315,8 @@ export const routeTree = rootRoute
     "/types": {
       "filePath": "types.lazy.jsx"
     },
-    "/update-car": {
-      "filePath": "update-car.lazy.jsx"
-    },
-    "/types-routes/TypesItem": {
-      "filePath": "types-routes/TypesItem.jsx"
+    "/cars/create": {
+      "filePath": "cars/create.lazy.jsx"
     },
     "/types-routes/$id": {
       "filePath": "types-routes/$id.lazy.jsx"
@@ -356,6 +326,8 @@ export const routeTree = rootRoute
     },
     "/manufactures/": {
       "filePath": "manufactures/index.lazy.jsx"
+    "/cars/edit/$id": {
+      "filePath": "cars/edit/$id.lazy.jsx"
     },
     "/types-routes/edit/$id": {
       "filePath": "types-routes/edit/$id.lazy.jsx"

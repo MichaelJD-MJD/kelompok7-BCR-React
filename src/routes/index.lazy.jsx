@@ -9,26 +9,31 @@ import beepImg from "../assets/img-BeepBeep.png"
 import "../styles/list-car.css";
 import { getCars } from "../service/car/car.service.index";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
 });
 
 function Index() {
+  const { token } = useSelector((state) => state.auth);
+  
   const navigate = useNavigate();
 
   const [cars, setCars] = useState([]);
 
   useEffect(() => {
     const getCarData = async () => {
-      const result = await getCarData();
+      const result = await getCars();
       if(result.success) {
         setCars(result.data);
       }
     };
 
-    getCarData();
-  })
+    if (token) {
+      getCarData();
+    }
+  }, [token]);
 
   return (
     <div className="container-fluid content-container p-3">
@@ -40,7 +45,7 @@ function Index() {
           <button className="btn add-btn">
             <img src={plusIc} alt="" />
             <span>
-              <Link to={"/add-car"}>Add New Car</Link>
+              <Link to={"/cars/create"}>Add New Car</Link>
             </span>
           </button>
         </div>
@@ -57,8 +62,8 @@ function Index() {
         {cars.length === 0 ? (
           <h1>Car data is not found!</h1>
         ) : (
-          cars.map((car) => {
-            <div className="col-3 mb-2 p-0">
+          cars.map((car, i) => (
+            <div className="col-3 mb-2 p-0" key={i}>
               <div className="card">
                 <img
                   src={car.image}
@@ -84,7 +89,7 @@ function Index() {
                       <img src={trashIc} alt="" /> Delete
                     </a>
                     <Link
-                      to={"/update-car"}
+                      to={`/cars/edit/${car.id}`}
                       className="btn btn-primary edit-btn ps-4 pe-4 p-2"
                     >
                       <img src={editIc} alt="" /> Edit
@@ -92,8 +97,8 @@ function Index() {
                   </div>
                 </div>
               </div>
-            </div>;
-          })
+            </div>
+          ))
         )}
       </div>
 
